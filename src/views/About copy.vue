@@ -39,30 +39,36 @@ export default {
                 canvas.height = this.height;
                 this.context = canvas.getContext('2d');
                 const image = new Image();
-                image.src = './green.png';
+                image.src = 'http://localhost:8080/green.png';
                 this.image = image;
-                const sprite = new Sprite({
-                    canvas,
-                    image,
-                    numberOfFrames: 10,
-                    ticksPerFrame: 0,
-                    row: 7,
-                    column: 7,
-                    x: 0,
-                    y: 0,
-                });
-                this.sprite = sprite;
             },
 
             // called once before every frame where the icon will be used
             render() {
+                const duration = 1000;
+                const t = (performance.now() % duration) / duration;
+
+                const radius = (size / 2) * 0.3;
+                const outerRadius = (size / 2) * 0.7 * t + radius;
                 const context = this.context;
-                // console.log(`rdapp: render -> this`, this);
 
                 // draw outer circle
                 context.clearRect(0, 0, this.width, this.height);
-                this.sprite.update();
-                this.sprite.render();
+                context.beginPath();
+                context.arc(this.width / 2, this.height / 2, outerRadius, 0, Math.PI * 2);
+                context.fillStyle = `rgba(255, 200, 200,${1 - t})`;
+                context.fill();
+
+                // draw inner circle
+                context.beginPath();
+                context.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2);
+                context.fillStyle = 'rgba(255, 100, 100, 1)';
+                context.strokeStyle = 'white';
+                context.lineWidth = 2 + 4 * (1 - t);
+                context.fill();
+                context.stroke();
+
+                // update this image's data with data from the canvas
                 this.data = context.getImageData(0, 0, this.width, this.height).data;
 
                 // continuously repaint the map, resulting in the smooth animation of the dot
@@ -96,7 +102,6 @@ export default {
                 source: 'points',
                 layout: {
                     'icon-image': 'pulsing-dot',
-                    'icon-rotation-alignment': 'map',
                 },
             });
         });

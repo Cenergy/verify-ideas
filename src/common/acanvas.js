@@ -3,12 +3,9 @@
 
 import Sprite from './sprite';
 
-const img = new Image();
-img.src = 'http://localhost:8080/NPC5.png';
-
 export default function start() {
-    const numCoins = 5;
-    const coins = [];
+    const num = 1000;
+    const objs = [];
     let canvas;
     function gameLoop() {
         window.requestAnimationFrame(gameLoop);
@@ -20,28 +17,28 @@ export default function start() {
 
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < coins.length; i += 1) {
-            coins[i].update();
-            coins[i].render();
+        for (let i = 0; i < objs.length; i += 1) {
+            objs[i].update();
+            objs[i].render();
         }
     }
 
-    function spawnCoin() {
+    function spread() {
         // Create sprite sheet
 
-        const coinImg = new Image();
-        coinImg.src = 'http://localhost:8080/NPC5.png';
-        const coinIndex = coins.length;
+        const image = new Image();
+        image.src = 'http://localhost:8080/green.png';
+        const coinIndex = objs.length;
 
         // Create sprite
-        coins[coinIndex] = new Sprite({
+        objs[coinIndex] = new Sprite({
             canvas,
-            image: coinImg,
-            numberOfFrames: 10,
-            ticksPerFrame: 0,
-            row: 4,
-            column: 4,
+            image,
+            row: 7,
+            column: 7,
         });
+        objs[coinIndex].x = Math.random() * canvas.width;
+        objs[coinIndex].y = Math.random() * canvas.height;
     }
 
     // Get canvas
@@ -49,8 +46,8 @@ export default function start() {
     // canvas.width = 460;
     // canvas.height = 230;
 
-    for (let i = 0; i < numCoins; i += 1) {
-        spawnCoin();
+    for (let i = 0; i < num; i += 1) {
+        spread();
     }
 
     gameLoop();

@@ -6,8 +6,8 @@ export default class Sprite {
         this.context = canvas.getContext('2d');
         this.width = width;
         this.height = height;
-        this.x = x || Math.random() * width;
-        this.y = y || Math.random() * height;
+        this.x = x;
+        this.y = y;
         this.image = image;
         this.row = row;
         this.column = column;
@@ -35,6 +35,16 @@ export default class Sprite {
         const height = this.gridHeight;
         const sx = this.frameColIndex * width;
         const sy = this.frameRowIndex * height;
-        this.context.drawImage(this.image, sx, sy, width, height, this.x, this.y, width, height);
+        this.context.drawImage(
+            this.image,
+            sx,
+            sy,
+            width,
+            height,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
     }
 }
