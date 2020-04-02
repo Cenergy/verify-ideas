@@ -26,6 +26,7 @@ module.exports = {
         ],
         'no-restricted-syntax': 'off',
         'no-prototype-builtins': 'off',
+        'no-named-as-default-member':'off',
         'no-bitwise': ['error', { int32Hint: true }],
         radix: ['error', 'as-needed'],
         'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],

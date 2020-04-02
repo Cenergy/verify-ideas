@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AniCanvas from '../common/acanvas';
+import start from '../common/acanvas';
 
 export default {
     name: 'HelloWorld',
@@ -15,12 +15,7 @@ export default {
         ctx: null,
     },
     mounted() {
-        window.onload = () => {
-            const canvas = this.$refs.canvas;
-            const can = new AniCanvas({ canvas, color: '#222' });
-            can.plot();
-            // can.tick();
-        };
+        window.onload = () => start();
     },
     methods: {
         gameLoop() {},
